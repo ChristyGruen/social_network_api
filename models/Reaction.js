@@ -26,3 +26,9 @@ const reactionSchema = new Schema(
 
 
 module.exports = reactionSchema;
+
+/*
+subdocument schema ref
+Mod18 Lession28 assignmentSchema.js
+
+*/

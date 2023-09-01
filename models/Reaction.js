@@ -17,7 +17,8 @@ const reactionSchema = new Schema(
       default: Date.now,
       get: (date) => {
         if (date) return date.toISOString().split("T") [0];
-    }},
+    }
+  },
   },
   {timestamps: true,
     // toObject: {virtuals: true}, 

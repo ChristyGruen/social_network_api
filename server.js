@@ -1,6 +1,7 @@
 const express = require('express');
 const db = require('./config/connection');
 const { Reaction, Thought, User } = require('./models');
+const routes = require('./routes');
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -11,62 +12,58 @@ app.use(express.json());
 ///need to update per README
 //get all users, thoughts  ref mod18 lesson12 server.js
 
+// moved these into their own api js files
 
-app.get("/api/user", async(req,res) => {
-  try{
-  const result = await User.find({});
-  res.status(200).json(result)
-}catch(err){
-  console.log(err)
-}
-});
+// app.get("/api/user", async(req,res) => {
+//   try{
+//   const result = await User.find({});
+//   res.status(200).json(result)
+// }catch(err){
+//   console.log(err)
+// }
+// });
 
-app.get("/api/thought", async(req,res) => {
-  try{
-  const result = await Thought.find({});
-  res.status(200).json(result)
-}catch(err){
-  console.log(err)
-}
-});
+// app.get("/api/thought", async(req,res) => {
+//   try{
+//   const result = await Thought.find({});
+//   res.status(200).json(result)
+// }catch(err){
+//   console.log(err)
+// }
+// });
 
-//get one user, thought
-app.get("/user/:id", async(req,res) => {
-  const result = await User.findById(req.params.id)
-  res.status(200).json(result)
-});
+// //get one user, thought
+// app.get("/api/user/:id", async(req,res) => {
+//   const result = await User.findById(req.params.id)
+//   res.status(200).json(result)
+// });
 
-app.get("/thought/:id", async(req,res) => {
-  const result = await Thought.findById(req.params.id)
-  res.status(200).json(result)
-});
+// app.get("/api/thought/:id", async(req,res) => {
+//   const result = await Thought.findById(req.params.id)
+//   res.status(200).json(result)
+// });
 
+// app.post("/api/user", async (req,res) =>{
+//   const newUser = await User.create(req.body)
+//   res.status(200).json({result: newUser})
+// });
 
+// app.post("/api/thought", async (req,res) =>{
+//   const newThought = await Thought.create(req.body)
+//   res.status(200).json({result: newThought})
+// });
 
-
-
-// app.post("/car", async (req, res) => {
-//   const newCar = await Car.create(req.body)
-//   res.status(200).json({ result: newCar })
-// })
-
-// app.post("/driver", async (req, res) => {
-//   const newDriver = await Driver.create(req.body)
-//   res.status(200).json({ result: newDriver })
-// })
-
-// app.put("/car/:id", async(req, res) => {
-//   const update = await Car.findOneAndUpdate(
+// app.put("api/user/:id", async(req, res) => {
+//   const update = await User.findOneAndUpdate(
 //     { _id: req.params.id },
-//     { make: JSON.stringify(req.body.make) },
-//     { model: JSON.stringify(req.body.model) },
-//     { year: JSON.stringify(req.body.year) },
+//     { username: JSON.stringify(req.body.username) },
+//     { email: JSON.stringify(req.body.email) },
 //     { new: true }
 //   )
 //   res.status(200).json({ result: update })
 // })
 
-// app.put("/car/:id", async(req, res) => {
+// app.put("api/thought/:id", async(req, res) => {
 //   const updateCar = await Car.findOneAndUpdate(
 //     { _id: req.params.id },
 //     { make: (req.body.make), 
@@ -79,11 +76,6 @@ app.get("/thought/:id", async(req,res) => {
 //   res.status(200).json({ result: updateCar })
 // })
 
-
-// app.get("/driver/:id", async(req,res) => {
-//   const driver = await Driver.findById(req.params.id).populate("driver")
-//   res.status(200).json({ result: driver })
-// })
 
 
 

@@ -1,25 +1,8 @@
 const router = require('express').Router();
-//not using controllers
-// const {
-//   getCourses,
-//   getSingleCourse,
-//   createCourse,
-//   updateCourse,
-//   deleteCourse,
-// } = require('../../controllers/courseController.js');
-
-// // /api/courses
-// router.route('/').get(getCourses).post(createCourse);
-
-// // /api/courses/:courseId
-// router
-//   .route('/:courseId')
-//   .get(getSingleCourse)
-//   .put(updateCourse)
-//   .delete(deleteCourse);
+const { Thought } = require('../../models')
 
 //get all thoughts
-app.get("/thought", async(req,res) => {
+router.get("/", async(req,res) => {
   try{
   const result = await Thought.find({});
   res.status(200).json(result)
@@ -29,30 +12,38 @@ app.get("/thought", async(req,res) => {
 });
 
 //get one thought
-app.get("/thought/:id", async(req,res) => {
+router.get("/:id", async(req,res) => {
+  try{
   const result = await Thought.findById(req.params.id)
   res.status(200).json(result)
+}catch(err){
+  console.log(err)
+}
 });
 
 // post new thought
-app.post("/thought", async (req,res) =>{
+router.post("/", async (req,res) =>{
+  try{
   const newThought = await Thought.create(req.body)
   res.status(200).json({result: newThought})
+}catch(err){
+  console.log(err)
+}
 });
 
 //update thought by id
-app.put("/thought/:id", async(req, res) => {
+router.put("/:id", async(req, res) => {
   const update = await Thought.findOneAndUpdate(
     { _id: req.params.id },
-    { thoughtText: JSON.stringify(req.body.thoughtText) },
-    { username: JSON.stringify(req.body.username) },
+    { thoughtText: req.body.thoughtText,   //removed JSON.stringify(req.body.thoughtText)
+    username: req.body.username }, //removed JSON.stringify(req.body.username)
     { new: true }
   )
   res.status(200).json({ result: update })
 });
 
 //delete thought by id
-app.delete("/thought/:id", async(req, res) => {
+router.delete("/:id", async(req, res) => {
   const update = await Thought.findOneAndDelete(
     { _id: req.params.id }
   )
@@ -60,6 +51,7 @@ app.delete("/thought/:id", async(req, res) => {
 });
 
 // to do things with reactions, do you loop through the array in Thought? 
+//per Gary and Austin: yes
 
 
 

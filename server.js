@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('./config/connection');
-const { Reaction, Thought, User } = require('./models');
+// const { Reaction, Thought, User } = require('./models');
 const routes = require('./routes');
 
 const PORT = process.env.PORT || 3001;
@@ -8,6 +8,27 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(routes);
+
+db.once('open', () => {
+  app.listen(PORT, () => {
+    console.log(`API server running on port ${PORT}!`);
+  });
+});
+
+
+//////////////can delete below once all routes are vetted
+
+
+
+
+
+
+
+
+
+
+
 
 ///need to update per README
 //get all users, thoughts  ref mod18 lesson12 server.js
@@ -79,8 +100,4 @@ app.use(express.json());
 
 
 
-db.once('open', () => {
-  app.listen(PORT, () => {
-    console.log(`API server running on port ${PORT}!`);
-  });
-});
+

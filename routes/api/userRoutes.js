@@ -1,28 +1,8 @@
 const router = require('express').Router();
-// not using controllers
-// const {
-//   getStudents,
-//   getSingleStudent,
-//   createStudent,
-//   deleteStudent,
-//   addAssignment,
-//   removeAssignment,
-// } = require('../../controllers/studentController');
-
-// // /api/students
-// router.route('/').get(getStudents).post(createStudent);
-
-// // /api/students/:studentId
-// router.route('/:studentId').get(getSingleStudent).delete(deleteStudent);
-
-// // /api/students/:studentId/assignments
-// router.route('/:studentId/assignments').post(addAssignment);
-
-// // /api/students/:studentId/assignments/:assignmentId
-// router.route('/:studentId/assignments/:assignmentId').delete(removeAssignment);
+const { User } = require('../../models')
 
 //get all users
-app.get("/user", async(req,res) => {
+router.get("/", async(req,res) => {
   try{
   const result = await User.find({});
   res.status(200).json(result)
@@ -32,34 +12,52 @@ app.get("/user", async(req,res) => {
 });
 
 //get one user
-app.get("/user/:id", async(req,res) => {
+router.get("/:id", async(req,res) => {
+  console.log(req.body)
+  console.log(req.params.id)
+  console.log(req.params)
+  try{
   const result = await User.findById(req.params.id)
   res.status(200).json(result)
+}catch(err){
+  console.log(err)
+}
 });
 
 // post new user
-app.post("/user", async (req,res) =>{
+router.post("/", async (req,res) =>{
+  try{
   const newUser = await User.create(req.body)
   res.status(200).json({result: newUser})
+}catch(err){
+  console.log(err)
+}
 });
 
 //update user by id
-app.put("/user/:id", async(req, res) => {
+router.put("/:id", async(req, res) => {
+  console.log(req.body)
+  try{
   const update = await User.findOneAndUpdate(
     { _id: req.params.id },
-    { username: JSON.stringify(req.body.username) },
-    { email: JSON.stringify(req.body.email) },
-    { new: true }
+    { username: req.body.username ,//removed JSON.stringify(req.body.username)
+     email: req.body.email },//removed JSON.stringify(req.body.email)
+    {new: true }
   )
   res.status(200).json({ result: update })
+}catch(err){
+  console.log(err)
+}
 });
 
-//delete user by id
-app.delete("/user/:id", async(req, res) => {
-  const update = await User.findOneAndDelete(
-    { _id: req.params.id }
-  )
+//delete user by id //Austin said this should also have something to do with thoughts???
+router.delete("/:id", async(req, res) => {
+  try{
+  const update = await User.findOneAndDelete({ _id: req.params.id })
   res.status(200).json({ result: update })
+}catch(err){
+  console.log(err)
+}
 });
 
 

@@ -50,7 +50,7 @@ router.put("/:id", async(req, res) => {
 }
 });
 
-//delete user by id //Austin said this should also have something to do with thoughts???
+//delete user by id //Austin said this should also have something to do with thoughts???  should the thoughts written by that user be deleted too?  Or should they stay because someone else may have reacted to it?
 router.delete("/:id", async(req, res) => {
   try{
   const update = await User.findOneAndDelete({ _id: req.params.id })

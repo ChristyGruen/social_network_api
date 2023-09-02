@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Thought } = require('../../models')
+const { Thought, User } = require('../../models')
 
 //get all thoughts
 router.get("/", async(req,res) => {
@@ -44,38 +44,39 @@ router.put("/:id", async(req, res) => {
 
 //delete thought by id  UPDATE TO MIMIC DELETE STUDENT in courseController Mod18 Lession28
 //only Thought deleted
-router.delete("/:id", async(req, res) => {
-  const update = await Thought.findOneAndDelete(
-    { _id: req.params.id }
-  )
-  res.status(200).json({ result: update })
-});
+// router.delete("/:thoughtId", async(req, res) => {
+//   try{
+//   const update = await Thought.findOneAndDelete(
+//     { _id: req.params.thoughtId }
+//   )
+//   res.status(200).json({ result: update })
+// }catch(err){
+//   console.log(err)
+// }
+// });
 
 
-//Delete a thought and remove it from the list for teh User 
+//Delete a thought and remove it from the list for the User 
 //Thought deleted from Thought and from User
 
-// router.delete ("/:id", async (req, res) => {
-//   try {
-//     const update = await Thought.findOneAndDelete({ _id: req.params.id });
+router.delete ("/:thoughtId", async (req, res) => {
+  try {
+    const update = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
 
-//     if (!update) {
-//       res.status(404).json({ message: 'No thought with that ID' });
-//     }
+    if (!update) {
+      res.status(404).json({ message: 'No thought with that ID' });
+    }
 
-//     await User.deleteMany({ _id: { $in: update.user } });
-//     res.json({ message: 'Thought deleted from Thought and User' });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// }),
-
-// to do things with reactions, do you loop through the array in Thought? 
-//per Gary and Austin: yes
+    await User.deleteMany({ _id: { $in: update.user } });
+    res.json({ message: 'Thought deleted from Thought and User' });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+}),
 
 /////////////////// reactions post and delete
 
-// Add an assignment to a student
+// Add a reaction to a thought
 router.post("/:thoughtId/reaction", async (req,res) =>{
   console.log(req.body);
 
@@ -97,7 +98,7 @@ router.post("/:thoughtId/reaction", async (req,res) =>{
     res.status(500).json(err);
   }
 });
-// Remove assignment from a student
+// Remove reaction from a thought
 router.delete("/:thoughtId/reaction/:reactionId", async(req, res) => {
   try {
     const thought = await Thought.findOneAndUpdate(
@@ -130,8 +131,9 @@ module.exports = router;
 
 Mod18 Lesson28 courseRoutes.js
 
-reaction routes ref
+reaction add and delete routes ref
 Mod18 Lesson28 studentController.js and studentRoutes.js
+
 
 
 

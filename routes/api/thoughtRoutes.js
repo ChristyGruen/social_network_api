@@ -25,13 +25,37 @@ router.get("/:id", async(req,res) => {
 // post new thought
 router.post("/", async (req,res) =>{
   try{
-  const newThought = await Thought.create(req.body)
+    const newThought = await Thought.create(req.body)
  //// add update to User here to add thoughtId to thoughts string?
-  res.status(200).json({result: newThought})
-}catch(err){
-  console.log(err)
-}
+    console.log(newThought)
+    console.log(`this is newthought username ${newThought.username}`)
+    console.log(newThought._id)
+    console.log(newThought.id)
+    const addThought = await User.findOneAndUpdate(
+      { username: newThought.username },
+      { $addToSet: { thoughts: newThought.id } },
+      { runValidators: true, new: true }
+    );
+
+    if (!addThought) {
+      return res
+        .status(404)
+        .json({ message: 'No user found with that ID :(' });
+    }
+
+////////////end add
+ 
+    res.status(200).json({result: newThought})
+  }catch(err){
+    console.log(err)
+  }
 });
+
+
+
+
+
+
 
 //update thought by id
 router.put("/:id", async(req, res) => {
@@ -63,13 +87,24 @@ router.put("/:id", async(req, res) => {
 
 router.delete ("/:thoughtId", async (req, res) => {
   try {
-    const update = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
+    const update = await Thought.findOneAndRemove({ _id: req.params.thoughtId });
 
     if (!update) {
       res.status(404).json({ message: 'No thought with that ID' });
     }
+////////////3Septupdate
+    const user = await User.findOneAndUpdate(
+      { thoughts: req.params.thoughtId },
+      { $pull: { thoughts: req.params.thoughtId } },
+      { new: true }
+    );
 
-    await User.deleteMany({ _id: { $in: update.user } });
+    if (!user) {
+      return res.status(404).json({
+        message: 'Thought deleted, but no user found',
+      });
+    }
+    //////////////////////3Septupdate
     res.json({ message: 'Thought deleted from Thought and User' });
   } catch (err) {
     res.status(500).json(err);

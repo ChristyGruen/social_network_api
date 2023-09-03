@@ -54,36 +54,26 @@ router.put("/:id", async(req, res) => {
 router.delete("/:id", async(req, res) => {
   try{
   const update = await User.findOneAndDelete({_id: req.params.id })
-  res.status(200).json({ result: update })
+  // res.status(200).json({ result: update })
+  ///////////3Septupdate from Mod18 Lesson 28 courseController line 47
+  ////////////concerned that thoughts is an array of strings?
+  if (!update) {
+    res.status(404).json({ message: 'No user with that ID' });
+  }
+
+  await Thought.deleteMany({ _id: { $in: update.thoughts } });
+  res.json({ message: 'Course and students deleted!' });  
+  ////////////////////3Septupdate
 }catch(err){
   console.log(err)
 }
 });
 
-//Thought deleted from Thought and from User - need 
-// router.delete ("/:id", async (req, res) => {
-//   try {
-//     const update = await Thought.findOneAndDelete({ _id: req.params.id });
-
-//     if (!update) {
-//       res.status(404).json({ message: 'No thought with that ID' });
-//     }
-
-//     await User.deleteMany({ _id: { $in: update.user } });
-//     res.json({ message: 'Thought deleted from Thought and User' });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// }),
-
 //////////////////////////// add friends
-
-
 
 // Add a friend to a user  (updated router and updated from passing in friend ID in the req.body to passing it in as req.params to match picture in homework demo)
 router.post("/:userId/friend/:friendId", async (req,res) =>{
   console.log( "----------------");
-  // console.log(req.body);
   console.log(req.params.userId);
   console.log(req.params.friendId);
 
@@ -107,46 +97,12 @@ router.post("/:userId/friend/:friendId", async (req,res) =>{
   }
 });
 
-
-
-
-// Remove a friend from a user
-// router.delete("/:userId/friend/:friendId", async(req, res) => {
-//   try {
-//     console.log(req.params.friendId)
-//     // let index = friends.indexOf(req.params.friendId)
-   
-//     const user = await User.findOneAndUpdate(
-//       { _id: req.params.userId }, 
-
-//       // mod18 lesson28, studentcontroller.js lines 124-130 
-//       //https://mongoosejs.com/docs/tutorials/findoneandupdate.html
-// /// STILL NOT WORKING
-//       { $pull: {friends: {_id:req.params.friendId}}},
-      
-//       { runValidators: true, new: true }
-//     );
-
-//     if (!user) {
-//       return res
-//         .status(404)
-//         .json({ message: 'No user found with that ID :(' });
-//     }
-
-//     res.json(user);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
-
 // USE remove reaction from a thought (works) to rewrite router.delete for remove friend from a user 
 router.delete("/:userId/friend/:friendId", async(req, res) => {
   try {
     const user = await User.findOneAndUpdate(
       { _id: req.params.userId },
-      { $pull: { 
-        friends:  req.params.friendId
-      } },
+      { $pull: { friends:  req.params.friendId} },
       { runValidators: true, new: true }
     );
 
@@ -194,6 +150,7 @@ Mod20 lesson28 BucketList.js
     setBucket(updatedBucket);
   };
 
+ref for fixing user route to delete from array
 https://stackoverflow.com/questions/56637646/delete-value-from-array-within-findoneandupdate
 
 */

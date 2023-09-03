@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const {isEmail} = require('validator');
+const { isEmail } = require('validator');
 
 const userSchema = new Schema(
   {
@@ -24,13 +24,14 @@ const userSchema = new Schema(
       ref: 'User',
       type: Schema.Types.String
     }],
-  },  {timestamps: true,
-    // toObject: {virtuals: true}, 
-    toJSON: {getters: true, virtuals:true}}
+  }, {
+  timestamps: true,
+  toJSON: { getters: true, virtuals: true }
+}
 );
 
 userSchema.virtual('friendCount')
-    .get(function() {return (this.friends.length) ? this.friends.length : 0})
+  .get(function () { return (this.friends.length) ? this.friends.length : 0 })
 
 const User = model('User', userSchema);
 module.exports = User;
@@ -38,6 +39,7 @@ module.exports = User;
 
 
 /*
+REFERENCES
 username unique trim
 https://masteringjs.io/tutorials/mongoose/unique
 https://stackoverflow.com/questions/20766360/whats-the-meaning-of-trim-when-use-in-mongoose

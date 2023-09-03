@@ -9,6 +9,7 @@ router.get("/", async(req,res) => {
 }catch(err){
   console.log(err)
 }
+
 });
 
 //get one thought
@@ -25,6 +26,7 @@ router.get("/:id", async(req,res) => {
 router.post("/", async (req,res) =>{
   try{
   const newThought = await Thought.create(req.body)
+ //// add update to User here to add thoughtId to thoughts string?
   res.status(200).json({result: newThought})
 }catch(err){
   console.log(err)

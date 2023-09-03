@@ -19,6 +19,17 @@
 }
 
 {
+	"username":"Jason G",
+	"email":"jasong@email.com"
+}
+
+{
+	"username":"SK Whirl",
+	"email":"skwhirl@email.com"
+}
+
+
+{
   "thoughtText":"Here's a little song I wrote",
   "username":"Donna Worry"
 }
@@ -37,6 +48,43 @@
   "reactionBody":"Fancy Feast for the win!",
   "username":"Berry LaVoid"
 }
+
+///////////////////// end seed data
+//create user
+{
+	"username":"SK Whirl",
+	"email":"skwhirl@email.com"
+}
+
+//update user (update ID in URL)
+{
+	"username":"SK Whorl",
+	"email":"skwhorl@email.com"
+}
+
+/////// delete user SK Whorl (update ID in URL)
+
+///////////add thought
+{
+  "thoughtText":"Skydiving is amazing",
+  "username":"Jason G"
+}
+
+//update thought (update ID in URL)
+{
+  "thoughtText":"Skydiving is amazing and exhilarating",
+  "username":"Jason G"
+}
+
+//delete thought Skydiving (update ID in URL)
+
+
+// add skydiving thought back and grab ID,  (update ID in URL)
+{
+  "reactionBody":"Sounds like an adventure!",
+  "username":"Donna Worry"
+}
+
 
 
 

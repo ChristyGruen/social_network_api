@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const reactionSchema = require ('./Reaction');
+const reactionSchema = require('./Reaction');
 
 const thoughtSchema = new Schema(
   {
@@ -14,28 +14,32 @@ const thoughtSchema = new Schema(
       type: Date,
       default: Date.now,
       get: (date) => {
-        if (date) return date.toISOString().split("T") [0];
-    }},
+        if (date) return date.toISOString().split("T")[0];
+      }
+    },
 
     username: {
       type: String,
-      required: true},
+      required: true
+    },
 
-      reactions: [reactionSchema],
-    
+    reactions: [reactionSchema],
+
   },
-  {timestamps: true,
-    // toObject: {virtuals: true}, 
-    toJSON: {getters: true, virtuals:true}}
+  {
+    timestamps: true,
+    toJSON: { getters: true, virtuals: true }
+  }
 );
 
 thoughtSchema.virtual('reactionCount')
-    .get(function() {return (this.reactions.length) ? this.reactions.length : 0})
+  .get(function () { return (this.reactions.length) ? this.reactions.length : 0 })
 
 const Thought = model('Thought', thoughtSchema);
 module.exports = Thought;
 
 /*
+REFERENCE
 thoughtText min max length
 https://stackoverflow.com/questions/28829912/mongoose-schema-set-max-length-for-a-string
 

@@ -10,25 +10,29 @@ const reactionSchema = new Schema(
     },
     username: {
       type: String,
-      required: true},
+      required: true
+    },
 
     createdAt: {
       type: Date,
       default: Date.now,
       get: (date) => {
-        if (date) return date.toISOString().split("T") [0];
-    }
+        if (date) return date.toISOString().split("T")[0];
+      }
+    },
   },
-  },
-  {timestamps: true,
+  {
+    timestamps: true,
     // toObject: {virtuals: true}, 
-    toJSON: {getters: true, virtuals:true}}
+    toJSON: { getters: true, virtuals: true }
+  }
 );
 
 
 module.exports = reactionSchema;
 
 /*
+REFERENCES
 subdocument schema ref
 Mod18 Lession28 assignmentSchema.js
 

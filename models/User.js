@@ -18,11 +18,11 @@ const userSchema = new Schema(
     },
     thoughts: [{
       ref: 'Thought',
-      type: Schema.Types.ObjectId
+      type: Schema.Types.String
     }],
     friends: [{
       ref: 'User',
-      type: Schema.Types.ObjectId
+      type: Schema.Types.String
     }],
   },  {timestamps: true,
     // toObject: {virtuals: true}, 

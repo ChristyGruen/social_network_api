@@ -24,8 +24,12 @@ The Social Network API is an application interface for a social network web app 
     To run the app locally, type node server.js in the terminal and enter. Insomnia can be used to evaluate the functionality of the api routes. 
 
   Watch a demo of the app here:
-  <https://watch.screencastify.com/v/blahblahblah>
-  
+  <https://watch.screencastify.com/v/33orm39VMzw9EI1Pt3wy>
+
+  ![API and MongoDb screenshots](./images/API_DB.png)
+
+  ![Insomnia screenshot](./images/insomnia.png)
+
   ## License
     none
 

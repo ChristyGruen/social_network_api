@@ -1,4 +1,3 @@
-
   # Social Network API
 
   ## Description
@@ -51,4 +50,4 @@ The Social Network API is an application interface for a social network web app 
 
   ## References
   References used during the api build are listed in the individual files where they were referenced.
-  
+ 

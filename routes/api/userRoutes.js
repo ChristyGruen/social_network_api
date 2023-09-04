@@ -41,9 +41,9 @@ router.put("/:id", async (req, res) => {
     const update = await User.findOneAndUpdate(
       { _id: req.params.id },
       {
-        username: req.body.username,//removed JSON.stringify(req.body.username)
+        username: req.body.username,
         email: req.body.email
-      },//removed JSON.stringify(req.body.email)
+      },
       { new: true }
     )
     res.status(200).json({ result: update })
@@ -52,7 +52,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-//delete user by id //Austin said this should also have something to do with thoughts???  should the thoughts written by that user be deleted too?  Or should they stay because someone else may have reacted to it?
+//delete user and user's thoughts by id 
 router.delete("/:id", async (req, res) => {
   try {
     const update = await User.findOneAndDelete({ _id: req.params.id })
